@@ -26,7 +26,7 @@ async def place(request):
         lat = float(request.query_params['lat'])
         lng = float(request.query_params['lng'])
         gmaps = gm.Client(key=PLACES_API)
-        found_places = gmaps.places_nearby(location=(lat, lng), radius=500)
+        found_places = gmaps.places_nearby(location=(lat, lng), radius=150)
     except Exception as e:
         print(e)
         error = True
