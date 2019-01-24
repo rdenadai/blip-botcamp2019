@@ -26,7 +26,14 @@ async def place(request):
         lat = float(request.query_params['lat'])
         lng = float(request.query_params['lng'])
         gmaps = gm.Client(key=PLACES_API)
-        found_places = gmaps.places_nearby(location=(lat, lng), radius=150)
+        places = gmaps.places_nearby(location=(lat, lng), radius=150)
+        for place in places['results']:
+            found_places.append({
+                'lat': place['geometry']['location']['lat'],
+                'lng': place['geometry']['location']['lng'],
+                'name': place['name'],
+                'vicinity': place['vicinity']
+            })
     except Exception as e:
         print(e)
         error = True
@@ -46,7 +53,7 @@ async def wiki(request):
     description = ''
     try:
         search = str(request.query_params['search'])
-        wk = wikipediaapi.Wikipedia('en')
+        wk = wikipediaapi.Wikipedia('pt')
         page = wk.page(search)
         title = page.title
         description = page.summary
