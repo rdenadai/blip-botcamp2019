@@ -1,0 +1,1 @@
+web: gunicorn application:app --reload -b 0.0.0.0:$PORT -w 4 -k uvicorn.workers.UvicornWorker
